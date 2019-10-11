@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Jeopardy</string>
+    <string name="title_activity_end">EndActivity</string>
+</resources>
