@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">" 考試APP"</string>
+    <string name="false_button">錯</string>
+    <string name="true_button">對</string>
+    <string name="start">開始</string>
+    <string name="answer">" 答案"</string>
+    <string name="next">" 下一個"</string>
+</resources>

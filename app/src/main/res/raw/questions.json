@@ -1,6 +1,7 @@
 [
-  {
-    "question": "You ever wonder why we're here?",
-    "answer": "no"
-  }
+  {"question": "Is 1 + 1 = 2?", "answer": "yes"},
+  {"question": "Is Jackal overpowered?", "answer": "yes"},
+  {"question": "BOSG ACOG?", "answer":  "yes"},
+  {"question": "Is the cake truthful?", "answer":  "no"}
+
 ]
