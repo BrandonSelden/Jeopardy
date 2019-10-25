@@ -2,6 +2,7 @@ package com.example.jeopardy;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,7 +24,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView question, answer;
     private String jsonFileText;
     private List<Question> questionList;
+    private Quiz quiz;
     private int questionNumber, pts;
+    public static final String POINTS = "points";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         Question[] questions = gson.fromJson(jsonFileText, Question[].class);
         questionList = Arrays.asList(questions);
         Log.d("o yes", "onCreate: " + questionList.toString());
+        quiz = new Quiz(questionList);
     }
     public String readTextFile(InputStream inputStream) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -70,17 +74,6 @@ public class MainActivity extends AppCompatActivity {
         next = findViewById(R.id.button_main_next);
     }
 
-    private void delay(int millis) {
-        try {
-            Thread.sleep(millis);
-        } catch (InterruptedException e1) {
-            e1.printStackTrace();
-        }
-    }
-
-    public void updateQuestion(){
-        questionNumber++;
-    }
     public void setListeners(){
         start.setOnClickListener((new View.OnClickListener(){
             @Override
@@ -101,12 +94,6 @@ public class MainActivity extends AppCompatActivity {
                 if(questionList.get(questionNumber).getAnswer().equals("yes")){
                     pts++;
                 }
-                if(questionNumber >= 9){
-
-                }
-                else {
-                    updateQuestion();
-                }
             }
         }));
         next.setOnClickListener((new View.OnClickListener(){
@@ -115,7 +102,16 @@ public class MainActivity extends AppCompatActivity {
                 question.setText(questionList.get(questionNumber).getQuestion());
                 next.setVisibility(View.INVISIBLE);
                 answer.setVisibility(View.INVISIBLE);
+                if(questionNumber < 3) {
+                    questionNumber++;
+                }
+                else{
+                    Intent targetIntent = new Intent(MainActivity.this, EndScreen.class);
+                    targetIntent.putExtra(POINTS, pts);
+                    startActivity(targetIntent);
+                }
             }
+
         }));
         butFal.setOnClickListener((new View.OnClickListener(){
             @Override
@@ -125,12 +121,6 @@ public class MainActivity extends AppCompatActivity {
                 next.setVisibility(View.VISIBLE);
                 if(questionList.get(questionNumber).getAnswer().equals("no")){
                     pts++;
-                }
-                if(questionNumber >= 9){
-
-                }
-                else {
-                    updateQuestion();
                 }
             }
         }));
