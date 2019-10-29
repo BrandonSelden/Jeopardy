@@ -6,5 +6,9 @@
     <string name="start">開始</string>
     <string name="answer">" 答案"</string>
     <string name="next">" 下一個"</string>
-    <string name="score">分 :</string>
+    <string name="you_got">你得到</string>
+    <string name="score">分</string>
+    <string name="correct">正確</string>
+    <string name="incorrect">不對</string>
+    <string name="restart">再玩一遍</string>
 </resources>

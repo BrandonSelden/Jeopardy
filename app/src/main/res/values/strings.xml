@@ -2,8 +2,12 @@
     <string name="app_name">Jeopardy</string>
     <string name="true_button">True</string>
     <string name="false_button">false</string>
-    <string name="answer">yes</string>
+    <string name="answer">pbt</string>
     <string name="start">Start</string>
     <string name="next">next</string>
-    <string name="score">Score : </string>
+    <string name="you_got">You got</string>
+    <string name="score"> points</string>
+    <string name="correct">Correct</string>
+    <string name="incorrect">Incorrect</string>
+    <string name="restart">restart</string>
 </resources>

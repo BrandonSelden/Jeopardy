@@ -21,12 +21,12 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private Button butTrue, butFal, start, next;
-    private TextView question, answer;
+    private TextView question, answer, questionNumberDisplay;
     private String jsonFileText;
     private List<Question> questionList;
     private Quiz quiz;
     private int questionNumber, pts;
-    public static final String POINTS = "points";
+    public static final String POINTS = "pts";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         start = findViewById(R.id.button_main_start);
         answer = findViewById(R.id.textView_main_answer);
         next = findViewById(R.id.button_main_next);
+        questionNumberDisplay = findViewById(R.id.textView_main_current_number);
     }
 
     public void setListeners(){
@@ -83,12 +84,18 @@ public class MainActivity extends AppCompatActivity {
                 butFal.setVisibility(View.VISIBLE);
                 butTrue.setVisibility(View.VISIBLE);
                 question.setText(questionList.get(questionNumber).getQuestion());
+                questionNumberDisplay.setText(questionNumber + 1 + "/5");
             }
         }));
         butTrue.setOnClickListener((new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                answer.setText(questionList.get(questionNumber).getAnswer());
+                if(questionList.get(questionNumber).getAnswer().equals("yes")){
+                    answer.setText(getString(R.string.correct));
+                }
+                else{
+                    answer.setText(getString(R.string.incorrect));
+                }
                 answer.setVisibility(View.VISIBLE);
                 next.setVisibility(View.VISIBLE);
                 if(questionList.get(questionNumber).getAnswer().equals("yes")){
@@ -99,24 +106,28 @@ public class MainActivity extends AppCompatActivity {
         next.setOnClickListener((new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                question.setText(questionList.get(questionNumber).getQuestion());
-                next.setVisibility(View.INVISIBLE);
-                answer.setVisibility(View.INVISIBLE);
-                if(questionNumber < 3) {
+                if(questionNumber < questionList.size() - 1) {
                     questionNumber++;
                 }
                 else{
-                    Intent targetIntent = new Intent(MainActivity.this, EndScreen.class);
-                    targetIntent.putExtra(POINTS, pts);
-                    startActivity(targetIntent);
+                    createIntent();
                 }
+                question.setText(questionList.get(questionNumber).getQuestion());
+                next.setVisibility(View.INVISIBLE);
+                answer.setVisibility(View.INVISIBLE);
+                questionNumberDisplay.setText(questionNumber + 1 + "/5");
             }
 
         }));
         butFal.setOnClickListener((new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                answer.setText(questionList.get(questionNumber).getAnswer());
+                if(questionList.get(questionNumber).getAnswer().equals("no")){
+                    answer.setText(getString(R.string.correct));
+                }
+                else{
+                    answer.setText(getString(R.string.incorrect));
+                }
                 answer.setVisibility(View.VISIBLE);
                 next.setVisibility(View.VISIBLE);
                 if(questionList.get(questionNumber).getAnswer().equals("no")){
@@ -124,6 +135,13 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }));
+    }
+
+    public void createIntent(){
+        Intent targetIntent = new Intent(MainActivity.this, EndScreen.class);
+        String points = pts + "";
+        targetIntent.putExtra(POINTS, points);
+        startActivity(targetIntent);
     }
 
 }
